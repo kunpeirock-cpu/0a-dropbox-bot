@@ -2,6 +2,16 @@ const { Client, GatewayIntentBits } = require('discord.js');
 const { Dropbox } = require('dropbox');
 const fetch = require('node-fetch');
 const path = require('path');
+const http = require('http');
+
+// Renderの無料プランはHTTPサーバーがないとスリープするため追加
+const server = http.createServer((req, res) => {
+  res.writeHead(200);
+  res.end('0A Dropbox Bot is running!');
+});
+server.listen(process.env.PORT || 3000, () => {
+  console.log('Keep-alive server started');
+});
 
 const client = new Client({
   intents: [
